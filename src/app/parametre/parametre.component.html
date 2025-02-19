@@ -1,0 +1,208 @@
+ 
+      <div class="content">
+        <h2>System Setup</h2>
+        <div class="button-group">
+          <button mat-raised-button class="custom" (click)="afficherSection('menu')">Menu</button>
+          <button mat-raised-button class="custom" (click)="afficherSection('restaurant')">Restaurant</button>
+          <button mat-raised-button class="custom" (click)="afficherSection('user')">User</button>
+          <button mat-raised-button class="custom" (click)="afficherSection('account')">Account</button>
+        </div>
+        <div class="menu"  *ngIf="selectedSection === 'menu'">
+            <div class="button-group">
+                <h1>Menu</h1>
+                <button mat-raised-button class="custom">Menu Items</button>
+                <button mat-raised-button class="custom">Sub Menu</button>
+                <button mat-raised-button class="custom">Menu Type</button>
+            </div>
+            
+            <div class="menu-container">
+                <div class="menu-items">
+                  <div class="menu-header">
+                    <h3>Menu Items</h3>
+                    <button mat-raised-button class="custom">Add Menu Item</button>
+                  </div>
+                  
+                  <table class="table1">
+                    <thead>
+                      <tr>
+                        <th> Item Name </th>
+                        <th> Item Price </th>
+                        <th> Category </th>
+                        <th> Sub Menu </th>
+                        <th> Type </th>
+                        <th> Rank </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                    <div class="placeholder1">   
+                        <tr class="row">
+                          <td class="cell">1</td>
+                          <td class="cell">2</td>
+                          <td class="cell">3</td>
+                          <td class="cell">4</td>
+                          <td class="cell">5</td>
+                          <td class="cell">6</td>
+                        </tr>
+                    </div>
+                    </tbody> 
+                    </table>     
+                  </div>
+                  
+                <div class="menu-categories"> 
+                    <h3>Menu Categories</h3>
+                  <div class="menu-header">
+                  <p>Add, Edit, Reorder Menu <br>Categories as you would like to appear on your Menu</p>
+                  <button mat-raised-button class="custom">Add Menu Category</button>
+                </div>
+                <div class="place"> </div>
+                </div>
+            </div>
+        </div> 
+        
+        <div class="restaurant-container" *ngIf="selectedSection === 'restaurant'">
+            <div class="restaurant-settings">
+              <h1>Restaurant</h1>
+              <div class="logo-section">
+                <label>Restaurant Logo</label>
+                <div class="image-placeholder"></div>
+              </div>
+              <button mat-raised-button class="custom1">Upload Logo</button>
+              
+              <div class="address-section">
+                <label>Restaurant Address</label>
+                <div class="text-placeholder"></div>
+              </div>
+              <button mat-raised-button class="custom1">Edit</button>
+          
+              <mat-checkbox>Allow Location Control</mat-checkbox>
+            </div>
+          
+            <div class="tables-section">
+              <div class="table-header">
+                <h3>Tables</h3>
+                <button mat-raised-button class="custom">Add Table</button>
+                <button mat-raised-button class="custom" style="margin-left: 470px;">Print QR Labels</button>
+              </div>
+              <div class="table-container">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th class="col-id">Table ID</th>
+                      <th class="col-name">Table Name</th>
+                    </tr>
+                  </thead>
+                </table>
+              
+                <div class="placeholder">
+                  <table class="table">
+                    <tbody>
+                      <tr>
+                        <td class="col-id">001</td>
+                        <td class="col-name">VIP Table</td>
+                        <td class="col-name"><button mat-raised-button class="custom">Assign Waiters</button>
+                        </td>
+                        <td class="col-name"><button mat-raised-button class="custom">Edit</button>
+                        </td>
+                        <td class="col-name"><button mat-raised-button class="custom">Remove</button>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              
+            </div>
+          </div>
+          
+
+          <div class="user-container" *ngIf="selectedSection === 'user'">
+            <div class="button-user">
+              <h1>User setup</h1>
+              <button mat-raised-button class="custom">Add user</button>
+          </div>
+          
+          <div class="user">
+                
+                <table class="table1">
+                  <thead>
+                    <tr>
+                      <th> Name </th>
+                      <th> Email </th>
+                      <th> Date </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                  <div class="place3">   
+                      <tr class="row">
+                        <td class="cell">1</td>
+                        <td class="cell">2</td>
+                        <td class="col-name"><button mat-raised-button class="custom">Reset password</button>
+                        </td>
+                        <td class="col-name"><button mat-raised-button class="custom">Edit</button>
+                        </td>
+                        <td class="col-name"><button mat-raised-button class="custom">Delete</button>
+                        </td>
+                      </tr>
+                  </div>
+                  </tbody> 
+                  </table>
+                  <!-- Contenu principal -->
+<div>
+  <h1>Menu</h1>
+  <button mat-raised-button (click)="ouvrirDialog()">Ouvrir Dialog</button>
+</div>
+
+<!-- MatDialog dans le même fichier -->
+<ng-template #dialogTemplate>
+  <h2 mat-dialog-title>Page Secondaire</h2>
+  <mat-dialog-content>
+    <p>Ceci est le contenu du MatDialog.</p>
+  </mat-dialog-content>
+  <mat-dialog-actions>
+    <button mat-button (click)="fermerDialog()">Fermer</button>
+  </mat-dialog-actions>
+</ng-template>
+       
+          </div>
+          </div>
+           
+          <div class="account-container" *ngIf="selectedSection === 'account'">
+            <div class="account-settings">
+              <h2>Account Settings</h2>
+              <p><strong>Current Plan:</strong> <br> <span class="plan">Premium <strong>$70.00</strong></span></p>
+              <p><strong>Renewal Date:</strong> <br> <span class="info">-</span></p>
+              <p><strong>Payment Method:</strong> <br> <span class="info">-</span></p>
+              <div class="buttons">
+                <button mat-button (click)="ouvrirPageSecondaire()">Ouvrir la page secondaire</button>
+                  <button class="btn">Payment Method</button>
+                  <button class="btn">Manage Subscription</button>
+              </div>
+          </div>
+  
+          <div class="payment-history">
+              <h3>Payment History</h3>
+              <table>
+                  <thead>
+                      <tr>
+                          <th>Date</th>
+                          <th>Amount</th>
+                          <th>Status</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                    <div class="place2">
+                    <tr>
+                      <td>1</td>
+                      <td>2</td>
+                      <td>3</td>
+                    </tr>
+                  </div>
+                  </tbody>
+              </table>
+          </div>
+      </div>
+          </div>
+
+      
+    
+  

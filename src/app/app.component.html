@@ -1,4 +1,4 @@
-<mat-sidenav-container class="sidebar-container">
+<mat-sidenav-container class="sidebar-container" *ngIf="router.url !== '/login' && router.url !== '/client'">
   <mat-sidenav 
   #sidenav
   mode="side"
@@ -6,7 +6,7 @@
   class="sidenav"
   >
 <mat-nav-list>
-  <mat-list-item routerLink="/login">Dashboard</mat-list-item>
+  <mat-list-item routerLink="/">Dashboard</mat-list-item>
   <mat-list-item routerLink="/setup">Paramètre</mat-list-item>
   <mat-list-item routerLink="/">Deconnexion</mat-list-item>
   <mat-list-item routerLink="/">Dashboard</mat-list-item>
@@ -24,3 +24,6 @@
 </mat-sidenav-container>
 
 
+<ng-container *ngIf="router.url === '/login' || router.url === '/client'">
+  <router-outlet></router-outlet>
+</ng-container>

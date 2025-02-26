@@ -45,7 +45,18 @@ h2, h3{
   background-color: white;
   border-radius: 10px;
 }
-
+.sub {
+  padding: 20px;
+  margin-top: 10px;
+  background-color: white;
+  border-radius: 10px;
+}
+.type {
+  padding: 20px;
+  margin-top: 10px;
+  background-color: white;
+  border-radius: 10px;
+}
 
 .button-group button.active {
   background-color: #ff8a65;
@@ -123,6 +134,11 @@ h2, h3{
     border: 1px solid #ddd;
     border-radius: 5px;
     background: white;
+  }
+  .image-placeholder img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
   }
   
   .tables-section {
@@ -248,4 +264,36 @@ p{
   height: 200px;
   overflow-y: scroll;
   border: 2px solid #ddd;
+}
+
+.full-width {
+  display: block;
+  width: 100%;
+}
+
+.upload-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.upload-btn {
+  background-color: #ff8a65;
+  color: white;
+  font-size: 16px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s ease-in-out;
+  display: inline-block;
+  text-align: center;
+}
+
+.upload-btn:hover {
+  background-color: #ff7043;
+}
+
+.upload-btn:active {
+  background-color: #ff5722;
 }

@@ -1,0 +1,69 @@
+<div class="num">
+  <form>
+    <mat-label>Entrez votre N° Table</mat-label>
+    <mat-form-field appearance="outline" class="full-width">
+      <input matInput type="text" required>
+    </mat-form-field>
+    
+    <div class="custom">
+      <button mat-raised-button class="custom1">OK</button>
+    </div>
+  </form>
+</div>
+
+
+<div class="container">
+  <div class="header">
+    <h1 class="logo">Resto<mat-icon class="icon">restaurant</mat-icon></h1>
+    <span class="table-number">Numéro de table: Table</span>
+    <img src="assets/logo.png" alt="Seafood Logo" class="logo-img">
+  </div>
+
+  <div class="buttons">
+    <button mat-raised-button class="custom2">Menu</button>
+    <button mat-raised-button class="custom2">My Order (0)</button>
+    <button mat-raised-button class="custom2">Get Waiter</button>
+  </div>
+
+  <mat-form-field appearance="outline" class="category-select">
+    <mat-label>Appetizers</mat-label>
+    <mat-select>
+      <mat-option value="appetizers">Appetizers</mat-option>
+      <mat-option value="main-courses">Main Courses</mat-option>
+      <mat-option value="desserts">Desserts</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <div class="menu-list">
+    <div class="menu-item">
+      <span class="item-name">Shrimp Cocktail</span>
+      <span class="item-price">$10.50</span>
+      <button class="detail" (click)="ouvrirDialog(detailDialog)"><span class="details">Details</span></button>
+      <ng-template #detailDialog>
+        <mat-dialog-content>
+         
+        </mat-dialog-content>
+        <mat-dialog-actions>
+          <button mat-button (click)="fermerDialog()">Fermer</button>
+        </mat-dialog-actions>
+      </ng-template>
+      <button mat-icon-button class="add-btn" (click)="ouvrirDialog(orderDialog)">
+        <mat-icon>add</mat-icon>
+      </button>
+      <ng-template #orderDialog>
+        <mat-dialog-content>
+          <form>
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Ajouter une instruction <br> ou une requête</mat-label>
+              <textarea matInput rows="4"></textarea>
+            </mat-form-field>
+          </form>
+        </mat-dialog-content>
+        <mat-dialog-actions>
+          <button mat-button (click)="fermerDialog()">Fermer</button>
+        </mat-dialog-actions>
+      </ng-template>
+    </div>
+
+  </div>
+</div>

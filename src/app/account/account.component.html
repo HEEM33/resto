@@ -1,0 +1,38 @@
+<div class="account-container">
+            <div class="account-settings">
+              <h2>Paramètres du compte</h2>
+              <p><strong>Plan actuel:</strong> <br> <span class="plan">Premium <strong>$70.00</strong></span></p>
+              <p><strong>Date de renouvellement:</strong> <br> <span class="info">-</span></p>
+              <p><strong>Mode de paiement:</strong> <br> <span class="info">-</span></p>
+              <div class="buttons">
+                  <button class="custom" (click)="ouvrirPageSecondaire()">Mode de paiement</button>
+                  <button class="custom" (click)="ouvrirPageSecondaire()">Gérer l’abonnement</button>
+              </div>
+          </div>
+  
+          <div class="payment-history">
+              <h3>Historique des paiements</h3>
+              <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+                    <ng-container matColumnDef="date">
+                        <th mat-header-cell *matHeaderCellDef> Date </th>
+                        <td mat-cell *matCellDef="let element"> {{element.date}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="quantite">
+                        <th mat-header-cell *matHeaderCellDef> Quantité </th>
+                        <td mat-cell *matCellDef="let element"> {{element.quantite}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="status">
+                        <th mat-header-cell *matHeaderCellDef> Status </th>
+                        <td mat-cell *matCellDef="let element"> {{element.status}} </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+                    </table>
+
+          </div>
+      </div>

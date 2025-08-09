@@ -1,9 +1,17 @@
+.container{
+   width: 30rem;
+    height: 27rem;
+    background-repeat: no-repeat;
+    background-size: cover;
+    box-shadow: 12px 12px 45px 12px #a7a5a5;
+    margin: 2% auto;
+    border-radius: 3px;
+}
 .login-container {
     text-align: center;
     max-width: 300px;
     margin: auto;
-  }
-  
+  }  
   .full-width {
     width: 100%;
   }
@@ -26,4 +34,5 @@
   .icon {
     vertical-align: middle;
   }
+  
   

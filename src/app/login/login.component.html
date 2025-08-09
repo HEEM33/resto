@@ -1,21 +1,24 @@
+<div class="container">
 <div class="login-container">
     <h1 class="logo">Resto<mat-icon class="icon">restaurant</mat-icon></h1>
     <h2>Login</h2>
-    <form>
+    <form (ngSubmit)="login()">
       <mat-form-field appearance="outline" class="full-width">
         <mat-label>Email</mat-label>
-        <input matInput type="email" required>
+        <input matInput type="email" [(ngModel)]="email" name="email" required>
       </mat-form-field>
       
       <mat-form-field appearance="outline" class="full-width">
         <mat-label>Password</mat-label>
-        <input matInput type="password" required>
+        <input matInput type="password" [(ngModel)]="password" name="password"
+        id="Password" required>
       </mat-form-field>
       
       <div class="button-group">
-        <button mat-raised-button class="custom">Sign In</button>
+        <button mat-raised-button class="custom" type="submit">Sign In</button>
         <button mat-raised-button class="custom">Forgot Password</button>
       </div>
     </form>
     <p class="register-link">Not Registered? <a href="#">Click here to get started</a></p>
   </div>
+</div>

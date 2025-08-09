@@ -4,6 +4,7 @@ import { ParametreComponent } from './parametre/parametre.component';
 import { ClientComponent } from './client/client.component';
 
 export const routes: Routes = [
+    { path: '', redirectTo: '/login', pathMatch: 'full' },
     {path: 'login', component: LoginComponent},
     {path: 'setup', component: ParametreComponent},
     {path: 'client', component: ClientComponent},

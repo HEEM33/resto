@@ -1,0 +1,79 @@
+
+
+/*resturant menu*/
+
+.restaurant-container {
+    display: flex;
+    margin-top: 10px;
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    gap: 20px;
+  }
+  
+  .restaurant-settings {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .logo-section, .address-section {
+    display: flex;
+    gap: 10px;
+  }
+  
+  .image-placeholder, .text-placeholder {
+    width: 200px;
+    height: 60px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background: white;
+  }
+  .image-placeholder img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .tables-section {
+    flex: 2;
+    display: flex;
+    flex-direction: column;
+  }
+ 
+  .place {
+    width: 80%;
+    height: 300px;
+    overflow-y: scroll;
+    border: 2px solid #ddd;
+    margin-top: 20px;
+  }
+  
+   .custom {
+    background-color: orangered !important;
+    color: white !important;
+    height: 20px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 300;
+    margin-left: 10px;
+    border: none;
+  }
+  
+  .custom1 {
+    background-color: orangered !important;
+    color: white !important;
+    height: 20px;
+    width: 150px;
+    margin-left: 150px;
+    border-radius: 20px;
+    border: none;
+  }
+  mat-checkbox{
+    margin-left: 120px;
+  }
+
+ a{
+  letter-spacing: 15px;
+ }

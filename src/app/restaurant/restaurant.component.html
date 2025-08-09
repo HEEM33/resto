@@ -1,0 +1,75 @@
+<div class="restaurant-container" >
+            <div class="restaurant-settings">
+              <h1>Mon restaurant</h1>
+              <div class="logo-section">
+                <label>Restaurant Logo</label>
+                <div class="image-placeholder">
+                  <img *ngIf="logoUrl" [src]="logoUrl" alt="Restaurant Logo">
+                </div>
+              </div>
+              
+              <input type="file" #fileInput hidden (change)="onFileSelected($event)">
+              <button mat-raised-button class="custom1" (click)="fileInput.click()">Upload Logo</button>
+              
+              <div class="address-section">
+                <label>Restaurant Address</label>
+                <div class="text-placeholder"></div>
+              </div>
+              <button mat-raised-button class="custom1">Edit</button>
+          
+              <mat-checkbox>Allow Location Control</mat-checkbox>
+            </div>
+          
+            <div class="tables-section">
+              <div class="table-header">
+                <h3>Tables</h3>
+                <button mat-raised-button class="custom" (click)="ouvrirDialog(tableDialog)">Add Table</button>
+                <!-- add table -->
+                <ng-template #tableDialog>
+                  <mat-dialog-content>
+                    <form>
+                      <mat-form-field appearance="outline" class="full-width">
+                        <mat-label>Nom</mat-label>
+                        <input matInput type="text" required [(ngModel)]="newTable.name" name="tableName">
+                      </mat-form-field>
+                    </form>
+                  </mat-dialog-content>
+                  <mat-dialog-actions>
+                    <button mat-button (click)="addTable()">Ajouter</button>
+                  </mat-dialog-actions>
+                </ng-template>
+                <button mat-raised-button class="custom" style="margin-left: 470px;">Print QR Labels</button>
+              </div>
+              <div class="table-container">
+               <div class="place">
+                   <table mat-table [dataSource]="tables" class="mat-elevation-z8">
+
+                    <ng-container matColumnDef="id">
+                        <th mat-header-cell *matHeaderCellDef> Table ID </th>
+                        <td mat-cell *matCellDef="let table"> {{table.id}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="nom">
+                        <th mat-header-cell *matHeaderCellDef> Nom de la table </th>
+                        <td mat-cell *matCellDef="let table"> {{table.nom}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="actions">
+                      <th mat-header-cell *matHeaderCellDef>  </th>
+                      <td mat-cell *matCellDef="let table">
+                        <button mat-raised-button class="custom">Assign Waiters</button>
+                        <a class="" (click)="editTable(table)"><i class="fi fi-rr-pencil"></i></a>
+                        <a class="" (click)="deleteTable(table.id)"><i class="fi fi-rr-trash"></i></a>
+                      </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="displayedTableColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedTableColumns;"></tr>
+
+                    </table> 
+                    </div> 
+              
+              </div>
+              
+            </div>
+</div>

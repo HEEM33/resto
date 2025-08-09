@@ -1,13 +1,15 @@
- 
+ <link rel="stylesheet" href="https://cdn-uicons.flaticon.com/uicons-regular-rounded/css/uicons-regular-rounded.css">
+
       <div class="content">
-        <h2>System Setup</h2>
+        <h2>Configuration du système</h2>
         <div class="button-group">
-          <button mat-raised-button class="custom" (click)="afficherSection('menu')">Menu</button>
-          <button mat-raised-button class="custom" (click)="afficherSection('restaurant')">Restaurant</button>
-          <button mat-raised-button class="custom" (click)="afficherSection('user')">User</button>
-          <button mat-raised-button class="custom" (click)="afficherSection('account')">Account</button>
+          <button mat-raised-button class="custom" (click)="afficheSection('menu')">Menu</button>
+          <button mat-raised-button class="custom" (click)="afficheSection('restaurant')">Restaurant</button>
+          <button mat-raised-button class="custom" (click)="afficheSection('user')">User</button>
+          <button mat-raised-button class="custom" (click)="afficheSection('account')">Account</button>
         </div>
-        <div class="menu"  *ngIf="selectedSection === 'menu'">
+        <ng-container *ngIf="sectionActive === 'menu'">
+        <div class="menu"  *ngIf="selectedSection === 'menu'" >
             <div class="button-group">
                 <h1>Menu</h1>
                 <button mat-raised-button class="custom" (click)="afficherSection('menu')">Menu Items</button>
@@ -19,38 +21,40 @@
                 <div class="menu-items">
                   <div class="menu-header">
                     <h3>Menu Items</h3>
-                    <button mat-raised-button class="custom" (click)="ouvrirDialog(menuItemDialog)">Add Menu Item</button>
+                    <button mat-raised-button class="custom" (click)="ouvrirDialog(menuItemDialog)">Ajouter un article</button>
                     <!-- add menu items -->
+                     
                     <ng-template #menuItemDialog>
                       <mat-dialog-content>
                         <form>
                           <mat-form-field appearance="outline" class="full-width">
                             <mat-label>Nom</mat-label>
-                            <input matInput type="text" required>
+                            <input matInput type="text" required [(ngModel)]="newMenu.name" name="menuName">
                           </mat-form-field>
                           <mat-form-field appearance="outline" class="full-width">
                             <mat-label>Prix</mat-label>
-                            <input matInput type="text" required>
+                            <input matInput type="text"  [(ngModel)]="newMenu.prix" name="prix">
                           </mat-form-field>
                           <mat-form-field appearance="outline" class="full-width">
                             <mat-label>Catégorie</mat-label>
-                            <input matInput type="text" required>
+                            <mat-select [(ngModel)]="selectedCategory" name="category" required>
+                              <mat-option *ngFor="let category of categories" [value]="category.id">
+                                {{ category.name }}
+                              </mat-option>
+                            </mat-select>
                           </mat-form-field>
                           <mat-form-field appearance="outline" class="full-width">
                             <mat-label>Type</mat-label>
-                            <input matInput type="text" required>
+                            <mat-select [(ngModel)]="selectedType" name="type" required>
+                              <mat-option *ngFor="let type of types" [value]="type.id">
+                                {{ type.name }}
+                              </mat-option>
+                            </mat-select>
                           </mat-form-field>
-                          <mat-form-field appearance="outline" class="full-width">
-                            <mat-label>Sous menu</mat-label>
-                            <input matInput type="text" required>
-                          </mat-form-field>
-                          <mat-form-field appearance="outline" class="full-width">
-                            <mat-label>Rang</mat-label>
-                            <input matInput type="text" required>
-                          </mat-form-field>
+                          
                           <mat-form-field appearance="outline" class="full-width">
                             <mat-label>Description</mat-label>
-                            <input matInput type="text" required>
+                            <input matInput type="text" required [(ngModel)]="newMenu.description" name="description">
                           </mat-form-field>
                           <div class="upload-container">
                             <input type="file" id="fileInput" hidden>
@@ -59,58 +63,100 @@
                         </form>
                       </mat-dialog-content>
                       <mat-dialog-actions>
-                        <button mat-button (click)="fermerDialog()">Fermer</button>
+                        <button mat-button (click)="addMenu()">Ajouter</button>
                       </mat-dialog-actions>
                     </ng-template>
+                    
                   </div>
                   
-                  <table class="table1">
-                    <thead>
-                      <tr>
-                        <th> Item Name </th>
-                        <th> Item Price </th>
-                        <th> Category </th>
-                        <th> Sub Menu </th>
-                        <th> Type </th>
-                        <th> Rank </th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                    <div class="placeholder1">   
-                        <tr class="row">
-                          <td class="cell">1</td>
-                          <td class="cell">2</td>
-                          <td class="cell">3</td>
-                          <td class="cell">4</td>
-                          <td class="cell">5</td>
-                          <td class="cell">6</td>
-                        </tr>
-                    </div>
-                    </tbody> 
-                    </table>     
+                  <div class="place">
+                   <table mat-table [dataSource]="menus" class="mat-elevation-z8">
+
+                    <ng-container matColumnDef="nom">
+                        <th mat-header-cell *matHeaderCellDef> Nom de l'article </th>
+                        <td mat-cell *matCellDef="let menu"> {{menu.name}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="prix">
+                        <th mat-header-cell *matHeaderCellDef> Prix de l'article </th>
+                        <td mat-cell *matCellDef="let menu"> {{menu.prix}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="categorie">
+                        <th mat-header-cell *matHeaderCellDef> Catégorie </th>
+                        <td mat-cell *matCellDef="let menu"> {{menu.categorie}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="type">
+                        <th mat-header-cell *matHeaderCellDef> Type </th>
+                        <td mat-cell *matCellDef="let menu"> {{menu.type}} </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="displayedMenuColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedMenuColumns;"></tr>
+
+                    </table>  
+                    </div>   
                   </div>
                   
                 <div class="menu-categories"> 
                     <h3>Menu Categories</h3>
                   <div class="menu-header">
-                  <p>Add, Edit, Reorder Menu <br>Categories as you would like to appear on your Menu</p>
-                  <button mat-raised-button class="custom" (click)="ouvrirDialog(categoryDialog)">Add Menu Category</button>
-                   <!-- add categorie -->
+                  <p>Ajouter, modifier, réorganiser les catégories de menu comme vous souhaitez qu'elles apparaissent dans votre menu</p>
+                  <button mat-raised-button class="custom" (click)="ouvrirDialog(categoryDialog)">Ajouter une catégorie</button>
                   <ng-template #categoryDialog>
                     <mat-dialog-content>
                       <form>
                         <mat-form-field appearance="outline" class="full-width">
                           <mat-label>Nom de la catégorie</mat-label>
-                          <input matInput type="text" required>
+                          <input matInput type="text" required [(ngModel)]="newCategory.name" name="categoryName">
                         </mat-form-field>
                       </form>
                     </mat-dialog-content>
                     <mat-dialog-actions>
-                      <button mat-button (click)="fermerDialog()">Fermer</button>
+                      <button mat-button (click)="addCategory()">Ajouter</button>
                     </mat-dialog-actions>
                   </ng-template>
                 </div>
-                <div class="place"> </div>
+                <div class="place1"> 
+                  <table mat-table [dataSource]="categories" class="mat-elevation-z8">
+
+                    <ng-container matColumnDef="id">
+                        <th mat-header-cell *matHeaderCellDef> ID </th>
+                        <td mat-cell *matCellDef="let category"> {{category.id}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="name">
+                        <th mat-header-cell *matHeaderCellDef> Nom de la catégorie </th>
+                        <td mat-cell *matCellDef="let category"> {{category.name}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="actions">
+                      <th mat-header-cell *matHeaderCellDef>  </th>
+                      <td mat-cell *matCellDef="let category">
+                        <a class="" (click)="editCategory(category)"><i class="fi fi-rr-pencil"></i></a>
+                        <a class="" (click)="deleteCategory(category.id)"><i class="fi fi-rr-trash"></i></a>
+                        <ng-template #categoryDialog1>
+                    <mat-dialog-content>
+                      <form>
+                        <mat-form-field appearance="outline" class="full-width">
+                          <mat-label>Nom de la catégorie</mat-label>
+                          <input matInput type="text" required [(ngModel)]="editCategory" [value]="category.name">
+                        </mat-form-field>
+                      </form>
+                    </mat-dialog-content>
+                    <mat-dialog-actions>
+                      <button mat-button (click)="updateCategory()">Modifier</button>
+                    </mat-dialog-actions>
+                  </ng-template>
+                      </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="displayedCategorieColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedCategorieColumns;"></tr>
+
+                    </table> 
+                </div>
                 </div>
             </div>
         </div> 
@@ -134,31 +180,32 @@
                         <form>
                           <mat-form-field appearance="outline" class="full-width">
                             <mat-label>Nom</mat-label>
-                            <input matInput type="text" required>
+                            <input matInput type="text" required [(ngModel)]="newMenu.name" name="menuName">
                           </mat-form-field>
                           <mat-form-field appearance="outline" class="full-width">
                             <mat-label>Prix</mat-label>
-                            <input matInput type="text" required>
+                            <input matInput type="text"  [(ngModel)]="newMenu.prix" name="prix">
                           </mat-form-field>
                           <mat-form-field appearance="outline" class="full-width">
                             <mat-label>Catégorie</mat-label>
-                            <input matInput type="text" required>
+                            <mat-select [(ngModel)]="selectedCategory" name="category" required>
+                              <mat-option *ngFor="let category of categories" [value]="category.id">
+                                {{ category.name }}
+                              </mat-option>
+                            </mat-select>
                           </mat-form-field>
                           <mat-form-field appearance="outline" class="full-width">
                             <mat-label>Type</mat-label>
-                            <input matInput type="text" required>
+                            <mat-select [(ngModel)]="selectedType" name="type" required>
+                              <mat-option *ngFor="let type of types" [value]="type.id">
+                                {{ type.name }}
+                              </mat-option>
+                            </mat-select>
                           </mat-form-field>
-                          <mat-form-field appearance="outline" class="full-width">
-                            <mat-label>Sous menu</mat-label>
-                            <input matInput type="text" required>
-                          </mat-form-field>
-                          <mat-form-field appearance="outline" class="full-width">
-                            <mat-label>Rang</mat-label>
-                            <input matInput type="text" required>
-                          </mat-form-field>
+                          
                           <mat-form-field appearance="outline" class="full-width">
                             <mat-label>Description</mat-label>
-                            <input matInput type="text" required>
+                            <input matInput type="text" required [(ngModel)]="newMenu.description" name="description">
                           </mat-form-field>
                           <div class="upload-container">
                             <input type="file" id="fileInput" hidden>
@@ -167,48 +214,52 @@
                         </form>
                       </mat-dialog-content>
                       <mat-dialog-actions>
-                        <button mat-button (click)="fermerDialog()">Fermer</button>
+                        <button mat-button (click)="addMenu()">Ajouter</button>
                       </mat-dialog-actions>
                     </ng-template>
                   </div>
                   
-                  <table class="table1">
-                    <thead>
-                      <tr>
-                        <th> Item Name </th>
-                        <th> Item Price </th>
-                        <th> Category </th>
-                        <th> Sub Menu </th>
-                        <th> Type </th>
-                        <th> Rank </th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                    <div class="placeholder1">   
-                        <tr class="row">
-                          <td class="cell">1</td>
-                          <td class="cell">2</td>
-                          <td class="cell">3</td>
-                          <td class="cell">4</td>
-                          <td class="cell">5</td>
-                          <td class="cell">6</td>
-                        </tr>
-                    </div>
-                    </tbody> 
-                    </table>     
+                  <div class="place"> 
+                  <table mat-table [dataSource]="menus" class="mat-elevation-z8">
+
+                    <ng-container matColumnDef="nom">
+                        <th mat-header-cell *matHeaderCellDef> Nom de l'article </th>
+                        <td mat-cell *matCellDef="let menu"> {{menu.name}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="prix">
+                        <th mat-header-cell *matHeaderCellDef> Prix de l'article </th>
+                        <td mat-cell *matCellDef="let menu"> {{menu.prix}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="categorie">
+                        <th mat-header-cell *matHeaderCellDef> Catégorie </th>
+                        <td mat-cell *matCellDef="let menu"> {{menu.categorie}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="type">
+                        <th mat-header-cell *matHeaderCellDef> Type </th>
+                        <td mat-cell *matCellDef="let menu"> {{menu.type}} </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="displayedMenuColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedMenuColumns;"></tr>
+
+                    </table> 
+                </div>    
                   </div>
                   
                 <div class="menu-categories"> 
                     <h3>Menu Categories</h3>
                   <div class="menu-header">
                   <p>Add, Edit, Reorder Menu <br>Categories as you would like to appear on your Menu</p>
-                  <button mat-raised-button class="custom" (click)="ouvrirDialog(categoryDialog)">Add Menu type</button>
+                  <button mat-raised-button class="custom" (click)="ouvrirDialog(categoryDialog)">Ajouter un sous</button>
                    <!-- add categorie -->
                   <ng-template #categoryDialog>
                     <mat-dialog-content>
                       <form>
                         <mat-form-field appearance="outline" class="full-width">
-                          <mat-label>Nom de la catégorie</mat-label>
+                          <mat-label>Nom</mat-label>
                           <input matInput type="text" required>
                         </mat-form-field>
                       </form>
@@ -218,7 +269,45 @@
                     </mat-dialog-actions>
                   </ng-template>
                 </div>
-                <div class="place"> </div>
+                <div class="place"> 
+                  <table mat-table [dataSource]="categories" class="mat-elevation-z8">
+
+                    <ng-container matColumnDef="id">
+                        <th mat-header-cell *matHeaderCellDef> ID </th>
+                        <td mat-cell *matCellDef="let category"> {{category.id}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="name">
+                        <th mat-header-cell *matHeaderCellDef> Nom de la catégorie </th>
+                        <td mat-cell *matCellDef="let category"> {{category.name}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="actions">
+                      <th mat-header-cell *matHeaderCellDef>  </th>
+                      <td mat-cell *matCellDef="let category">
+                        <a class="" (click)="editCategory(category)"><i class="fi fi-rr-pencil"></i></a>
+                        <a class="" (click)="deleteCategory(category.id)"><i class="fi fi-rr-trash"></i></a>
+                        <ng-template #categoryDialog1>
+                    <mat-dialog-content>
+                      <form>
+                        <mat-form-field appearance="outline" class="full-width">
+                          <mat-label>Nom de la catégorie</mat-label>
+                          <input matInput type="text" required [(ngModel)]="editCategory" [value]="category.name">
+                        </mat-form-field>
+                      </form>
+                    </mat-dialog-content>
+                    <mat-dialog-actions>
+                      <button mat-button (click)="updateCategory()">Modifier</button>
+                    </mat-dialog-actions>
+                  </ng-template>
+                      </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="displayedCategorieColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedCategorieColumns;"></tr>
+
+                    </table> 
+                   </div>
                 </div>
             </div>
         </div> 
@@ -235,251 +324,158 @@
             <div class="menu-container">
                 <div class="menu-items">
                   <div class="menu-header">
-                    <h3>Sub Menu</h3>
-                    <button mat-raised-button class="custom" (click)="ouvrirDialog(menuItemDialog)">AddSub Menu</button>
+                    <h3>Menu Items</h3>
+                    <button mat-raised-button class="custom" (click)="ouvrirDialog(menuItemDialog)">Ajouter un article</button>
                     <!-- add menu items -->
                     <ng-template #menuItemDialog>
                       <mat-dialog-content>
                         <form>
                           <mat-form-field appearance="outline" class="full-width">
                             <mat-label>Nom</mat-label>
-                            <input matInput type="text" required>
+                            <input matInput type="text" required [(ngModel)]="newMenu.name" name="menuName">
                           </mat-form-field>
                           <mat-form-field appearance="outline" class="full-width">
                             <mat-label>Prix</mat-label>
-                            <input matInput type="text" required>
+                            <input matInput type="text"  [(ngModel)]="newMenu.prix" name="prix">
                           </mat-form-field>
                           <mat-form-field appearance="outline" class="full-width">
                             <mat-label>Catégorie</mat-label>
-                            <input matInput type="text" required>
+                            <mat-select [(ngModel)]="selectedCategory" name="category" required>
+                              <mat-option *ngFor="let category of categories" [value]="category.id">
+                                {{ category.name }}
+                              </mat-option>
+                            </mat-select>
                           </mat-form-field>
                           <mat-form-field appearance="outline" class="full-width">
                             <mat-label>Type</mat-label>
-                            <input matInput type="text" required>
+                            <mat-select [(ngModel)]="selectedType" name="type" required>
+                              <mat-option *ngFor="let type of types" [value]="type.id">
+                                {{ type.name }}
+                              </mat-option>
+                            </mat-select>
                           </mat-form-field>
-                          <mat-form-field appearance="outline" class="full-width">
-                            <mat-label>Sous menu</mat-label>
-                            <input matInput type="text" required>
-                          </mat-form-field>
-                          <mat-form-field appearance="outline" class="full-width">
-                            <mat-label>Rang</mat-label>
-                            <input matInput type="text" required>
-                          </mat-form-field>
+                          
                           <mat-form-field appearance="outline" class="full-width">
                             <mat-label>Description</mat-label>
-                            <input matInput type="text" required>
+                            <input matInput type="text" required [(ngModel)]="newMenu.description" name="description">
                           </mat-form-field>
                           <div class="upload-container">
-                            <input type="file" id="fileInput" #fileInput hidden (change)="onFileSelected($event)" hidden>
+                            <input type="file" id="fileInput" hidden>
                             <label for="fileInput" class="upload-btn">Click to upload an image</label>
                           </div>
                         </form>
                       </mat-dialog-content>
                       <mat-dialog-actions>
-                        <button mat-button (click)="fermerDialog()">Fermer</button>
+                        <button mat-button (click)="addMenu()">Ajouter</button>
                       </mat-dialog-actions>
                     </ng-template>
                   </div>
                   
-                  <table class="table1">
-                    <thead>
-                      <tr>
-                        <th> Item Name </th>
-                        <th> Item Price </th>
-                        <th> Category </th>
-                        <th> Sub Menu </th>
-                        <th> Type </th>
-                        <th> Rank </th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                    <div class="placeholder1">   
-                        <tr class="row">
-                          <td class="cell">1</td>
-                          <td class="cell">2</td>
-                          <td class="cell">3</td>
-                          <td class="cell">4</td>
-                          <td class="cell">5</td>
-                          <td class="cell">6</td>
-                        </tr>
-                    </div>
-                    </tbody> 
-                    </table>     
+                  <div class="place"> 
+                  <table mat-table [dataSource]="menus" class="mat-elevation-z8">
+
+                    <ng-container matColumnDef="nom">
+                        <th mat-header-cell *matHeaderCellDef> Nom de l'article </th>
+                        <td mat-cell *matCellDef="let menu"> {{menu.name}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="prix">
+                        <th mat-header-cell *matHeaderCellDef> Prix de l'article </th>
+                        <td mat-cell *matCellDef="let menu"> {{menu.prix}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="categorie">
+                        <th mat-header-cell *matHeaderCellDef> Catégorie </th>
+                        <td mat-cell *matCellDef="let menu"> {{menu.categorie}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="type">
+                        <th mat-header-cell *matHeaderCellDef> Type </th>
+                        <td mat-cell *matCellDef="let menu"> {{menu.type}} </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="displayedMenuColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedMenuColumns;"></tr>
+
+                    </table> 
+                </div>  
                   </div>
                   
                 <div class="menu-categories"> 
-                    <h3>Sub Menu Categories</h3>
+                    <h3>Menu Types</h3>
                   <div class="menu-header">
-                  <p>Add, Edit, Reorder Menu <br>Categories as you would like to appear on your Menu</p>
-                  <button mat-raised-button class="custom" (click)="ouvrirDialog(categoryDialog)">Add Menu Category</button>
-                   <!-- add categorie -->
-                  <ng-template #categoryDialog>
+                  <p>Ajouter, modifier, réorganiser les types de menu <br> comme vous souhaitez qu'elles apparaissent dans votre menu</p>
+                  <button mat-raised-button class="custom" (click)="ouvrirDialog(typeDialog)">Ajouter un type</button>
+                   <!-- add type -->
+                  <ng-template #typeDialog>
                     <mat-dialog-content>
                       <form>
                         <mat-form-field appearance="outline" class="full-width">
-                          <mat-label>Nom de la catégorie</mat-label>
-                          <input matInput type="text" required>
+                          <mat-label>Nom du type</mat-label>
+                          <input matInput type="text" required [(ngModel)]="newType.name" name="typeName">
                         </mat-form-field>
                       </form>
                     </mat-dialog-content>
                     <mat-dialog-actions>
-                      <button mat-button (click)="fermerDialog()">Fermer</button>
+                      <button mat-button (click)="addType()">Ajouter</button>
                     </mat-dialog-actions>
                   </ng-template>
                 </div>
-                <div class="place"> </div>
+                <div class="place1"> 
+                  <table mat-table [dataSource]="types" class="mat-elevation-z8">
+
+                    <ng-container matColumnDef="id">
+                        <th mat-header-cell *matHeaderCellDef> ID </th>
+                        <td mat-cell *matCellDef="let type"> {{type.id}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="name">
+                        <th mat-header-cell *matHeaderCellDef> Nom du type </th>
+                        <td mat-cell *matCellDef="let type"> {{type.name}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="actions">
+                      <th mat-header-cell *matHeaderCellDef>  </th>
+                      <td mat-cell *matCellDef="let type">
+                        <a class="" (click)="editType(type)"><i class="fi fi-rr-pencil"></i></a>
+                        <a class="" (click)="deleteType(type.id)"><i class="fi fi-rr-trash"></i></a>
+                        <ng-template #categoryDialog1>
+                    <mat-dialog-content>
+                      <form>
+                        <mat-form-field appearance="outline" class="full-width">
+                          <mat-label>Nom du type</mat-label>
+                          <input matInput type="text" required [(ngModel)]="editType" [value]="type.name">
+                        </mat-form-field>
+                      </form>
+                    </mat-dialog-content>
+                    <mat-dialog-actions>
+                      <button mat-button (click)="updateType()">Modifier</button>
+                    </mat-dialog-actions>
+                  </ng-template>
+                      </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="displayedTypeColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedTypeColumns;"></tr>
+
+                    </table> 
+                   </div>
                 </div>
             </div>
         </div> 
-        
-        <div class="restaurant-container" *ngIf="selectedSection === 'restaurant'">
-            <div class="restaurant-settings">
-              <h1>Restaurant</h1>
-              <div class="logo-section">
-                <label>Restaurant Logo</label>
-                <div class="image-placeholder">
-                  <img *ngIf="logoUrl" [src]="logoUrl" alt="Restaurant Logo">
-                </div>
-              </div>
-              
-              <input type="file" #fileInput hidden (change)="onFileSelected($event)">
-              <button mat-raised-button class="custom1" (click)="fileInput.click()">Upload Logo</button>
-              
-              <div class="address-section">
-                <label>Restaurant Address</label>
-                <div class="text-placeholder"></div>
-              </div>
-              <button mat-raised-button class="custom1">Edit</button>
-          
-              <mat-checkbox>Allow Location Control</mat-checkbox>
-            </div>
-          
-            <div class="tables-section">
-              <div class="table-header">
-                <h3>Tables</h3>
-                <button mat-raised-button class="custom" (click)="ouvrirDialog(tableDialog)">Add Table</button>
-                <!-- add table -->
-                <ng-template #tableDialog>
-                  
-                  <mat-dialog-content>
-                    <form>
-                      <mat-form-field appearance="outline" class="full-width">
-                        <mat-label>N° Table</mat-label>
-                        <input matInput type="" required>
-                      </mat-form-field>
-                      <mat-form-field appearance="outline" class="full-width">
-                        <mat-label>Nom</mat-label>
-                        <input matInput type="text" required>
-                      </mat-form-field>
-                    </form>
-                  </mat-dialog-content>
-                  <mat-dialog-actions>
-                    <button mat-button (click)="fermerDialog()">Fermer</button>
-                  </mat-dialog-actions>
-                </ng-template>
-                <button mat-raised-button class="custom" style="margin-left: 470px;">Print QR Labels</button>
-              </div>
-              <div class="table-container">
-                <table class="table">
-                  <thead>
-                    <tr>
-                      <th class="col-id">Table ID</th>
-                      <th class="col-name">Table Name</th>
-                    </tr>
-                  </thead>
-                </table>
-              
-                <div class="placeholder">
-                  <table class="table">
-                    <tbody>
-                      <tr>
-                        <td class="col-id">001</td>
-                        <td class="col-name">VIP Table</td>
-                        <td class="col-name"><button mat-raised-button class="custom">Assign Waiters</button>
-                        </td>
-                        <td class="col-name"><button mat-raised-button class="custom">Edit</button>
-                        </td>
-                        <td class="col-name"><button mat-raised-button class="custom">Remove</button>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-              
-            </div>
-          </div>
-          
+</ng-container>
+        <div *ngIf="sectionActive === 'restaurant'">
+           <app-restaurant></app-restaurant> 
+        </div>
 
-          <div class="user-container" *ngIf="selectedSection === 'user'">
-            <div class="button-user">
-              <h1>User setup</h1>
-              <button mat-raised-button class="custom">Add user</button>
-          </div>
-          
-          <div class="user">
-                
-                <table class="table1">
-                  <thead>
-                    <tr>
-                      <th> Name </th>
-                      <th> Email </th>
-                      <th> Date </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                  <div class="place3">   
-                      <tr class="row">
-                        <td class="cell">1</td>
-                        <td class="cell">2</td>
-                        <td class="col-name"><button mat-raised-button class="custom">Reset password</button>
-                        </td>
-                        <td class="col-name"><button mat-raised-button class="custom">Edit</button>
-                        </td>
-                        <td class="col-name"><button mat-raised-button class="custom">Delete</button>
-                        </td>
-                      </tr>
-                  </div>
-                  </tbody> 
-                  </table>
-          </div>
-          </div>
-           
-          <div class="account-container" *ngIf="selectedSection === 'account'">
-            <div class="account-settings">
-              <h2>Account Settings</h2>
-              <p><strong>Current Plan:</strong> <br> <span class="plan">Premium <strong>$70.00</strong></span></p>
-              <p><strong>Renewal Date:</strong> <br> <span class="info">-</span></p>
-              <p><strong>Payment Method:</strong> <br> <span class="info">-</span></p>
-              <div class="buttons">
-                <button mat-button (click)="ouvrirPageSecondaire()">Ouvrir la page secondaire</button>
-                  <button class="btn">Payment Method</button>
-                  <button class="btn">Manage Subscription</button>
-              </div>
-          </div>
-  
-          <div class="payment-history">
-              <h3>Payment History</h3>
-              <table>
-                  <thead>
-                      <tr>
-                          <th>Date</th>
-                          <th>Amount</th>
-                          <th>Status</th>
-                      </tr>
-                  </thead>
-                  <tbody>
-                    <div class="place2">
-                    <tr>
-                      <td>1</td>
-                      <td>2</td>
-                      <td>3</td>
-                    </tr>
-                  </div>
-                  </tbody>
-              </table>
-          </div>
-      </div>
+        <div *ngIf="sectionActive === 'user'">
+          <app-user></app-user> 
+        </div>
+        
+        <div *ngIf="sectionActive === 'account'">
+          <app-account></app-account> 
+        </div>
+ 
           </div>
 
       

@@ -23,6 +23,8 @@ body {
     background-color: orangered !important;
     color: white !important;
     height: 20px;
+    font-size: 12px;
+    font-weight: 300;
     margin-left: 10px;
   }
 
@@ -90,192 +92,33 @@ h2, h3{
   border: none;
 }
 
-.placeholder1 {
-  width: 120%;
-  height: 300px;
-  overflow-y: scroll;
-  border: 2px solid #ddd;
-}
-
 .place {
   width: 100%;
   height: 300px;
   overflow-y: scroll;
   border: 2px solid #ddd;
+  margin-top: 25px;
 }
-
-
-/*resturant menu*/
-
-.restaurant-container {
-    display: flex;
-    margin-top: 10px;
-    background: white;
-    padding: 20px;
-    border-radius: 10px;
-    gap: 20px;
-  }
-  
-  .restaurant-settings {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-  }
-  
-  .logo-section, .address-section {
-    display: flex;
-    gap: 10px;
-  }
-  
-  .image-placeholder, .text-placeholder {
-    width: 200px;
-    height: 60px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    background: white;
-  }
-  .image-placeholder img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-  
-  .tables-section {
-    flex: 2;
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .table-header {
-    align-items: center;
-    gap: 10px;
-  }
-  
-  thead, tbody {
-    display: block; 
-  }
-  
-  thead {
-    width: 100%;
-  }
-  
-  th, td {
-    padding: 16px;
-    text-align: left;
-  }
-  td {
-    padding: 10px 30px; 
-  }
-  
-  .placeholder {
-    width: 100%;
-    height: 300px;
-    overflow-y: scroll;
-    border: 2px solid #ddd;
-  }
-  
-  .placeholder table {
-    width: 100%;
-  }
-  
-  .custom1 {
-    background-color: orangered !important;
-    color: white !important;
-    height: 20px;
-    width: 150px;
-    margin-left: 150px;
-  }
-  mat-checkbox{
-    margin-left: 120px;
-  }
-
-  /*account*/
-  .account-container {
-    display: flex;
-    gap: 50px;
-    background: white;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-    max-width: 900px;
-    margin: auto;
-    margin-top: 10px;
-}
-
-.account-settings {
-    width: 40%;
-}
-
-.account-settings h2 {
-    margin-bottom: 10px;
-}
-
-.plan {
-    font-size: 16px;
-    color: #333;
-}
-
-.info {
-    color: #666;
-}
-p{
-  margin-bottom: 50px;
-}
-.buttons {
-    margin-top: 20px;
-}
-
-.btn {
-    background-color: #ff6b3d;
-    color: white;
-    border: none;
-    padding: 10px 15px;
-    border-radius: 15px;
-    cursor: pointer;
-    margin-right: 10px;
-    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
-}
-.place2{
-  width: 150%;
-  height: 200px;
+.place1 {
+  width: 100%;
+  height: 300px;
   overflow-y: scroll;
   border: 2px solid #ddd;
+  
 }
-
-/*user*/
-.button-user {
-  display: flex;
-  gap: 5px;
-  align-items: center;
-}
+a{
+  letter-spacing: 15px;
+ }
 
 
 
-.user-container{
-  background: white;
-  padding: 20px;
-  border-radius: 10px;
-  margin: auto;
-  margin-top: 10px;
-}
-.place3{
-  width: 120%;
-  height: 200px;
-  overflow-y: scroll;
-  border: 2px solid #ddd;
-}
 
+/*page secondaire */
 .full-width {
   display: block;
   width: 100%;
 }
 
-.upload-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
 
 .upload-btn {
   background-color: #ff8a65;
@@ -297,3 +140,6 @@ p{
 .upload-btn:active {
   background-color: #ff5722;
 }
+
+ 
+
